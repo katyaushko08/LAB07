@@ -49,7 +49,7 @@ students[2].PayTuition(1000);
 
 
 
-double totalPayment = 0;                                            
+decimal totalPayment = 0;                                            
 foreach (Student student in students)
 {
     totalPayment += student.GetRemainingPayment();

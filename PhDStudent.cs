@@ -16,14 +16,14 @@ namespace LAB07
             int course,
             string studyForm,
             double averageGrade,
-            double scholarship,
-            double tuitionFee,
-            string scientificsupervisor,
-            string researcharea
+            decimal scholarship,
+            decimal tuitionFee,
+            string scientificSupervisor,
+            string researchArea
             ) : base(name, age, course, studyForm, averageGrade, scholarship, tuitionFee)
         {
-            ScientificSupervisor = scientificsupervisor;
-            ResearchArea = researcharea;
+            ScientificSupervisor = scientificSupervisor;
+            ResearchArea = researchArea;
         }
 
         public override void RecalculatePayments()
@@ -31,8 +31,18 @@ namespace LAB07
             base.RecalculatePayments();
             if (StudyForm == "Бюджет")
             {
-                Scholarship = AverageGrade >= 8.0 ? 350 :
-                              (AverageGrade >= 6.0 ? 200 : 0);
+                if (AverageGrade >= 8.0)
+                {
+                    Scholarship = 350m;
+                }
+                else if (AverageGrade >= 6.0)
+                {
+                    Scholarship = 200m;
+                }
+                else
+                {
+                    Scholarship = 0m;
+                }
             }
         }
 

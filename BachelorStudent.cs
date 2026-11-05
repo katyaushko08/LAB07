@@ -15,8 +15,8 @@ namespace LAB07
             int course, 
             string studyForm, 
             double averageGrade, 
-            double scholarship, 
-            double tuitionFee,
+            decimal scholarship, 
+            decimal tuitionFee,
             string group,
             string direction
             ) : base (name, age, course, studyForm, averageGrade, scholarship, tuitionFee)
@@ -30,8 +30,19 @@ namespace LAB07
             base.RecalculatePayments();
             if (StudyForm == "Бюджет")
             {
-                Scholarship = AverageGrade >= 8.0 ? 250 :
-                              (AverageGrade >= 6.0 ? 150 : 0);
+                if (AverageGrade >= 8.0)
+                {
+                    Scholarship = 250m;
+                }
+                else if (AverageGrade >= 6.0) 
+                {
+                    Scholarship = 150m;
+                }
+                else
+                {
+                    Scholarship = 0m;
+                }
+
             }
         }
 

@@ -11,10 +11,11 @@ namespace LAB07
         public int Course { get; set; }
         public string StudyForm { get; set; }
         public double AverageGrade { get; set; }
-        public double Scholarship { get; set; }
-        public double TuitionFee { get; set; }
+        public decimal Scholarship { get; set; }
+        public decimal TuitionFee { get; set; }
+        public decimal BaseTuitionFee { get; set; }
 
-        public Student(string name, int age, int course, string studyForm, double averageGrade, double scholarship, double tuitionFee)
+        public Student(string name, int age, int course, string studyForm, double averageGrade, decimal scholarship, decimal tuitionFee)
         {
             Name = name;
             Age = age;
@@ -23,6 +24,9 @@ namespace LAB07
             AverageGrade = averageGrade;
             Scholarship = scholarship;
             TuitionFee = tuitionFee;
+            BaseTuitionFee = tuitionFee;
+
+            RecalculatePayments();
         }
         public virtual void RecalculatePayments()
         {
@@ -30,28 +34,36 @@ namespace LAB07
             {
                 if (AverageGrade >= 8.0)
                 {
-                    Scholarship = 200;
+                    Scholarship = 200m;
                 }
                 else if(AverageGrade >= 6.0)
                 {
-                    Scholarship = 150;
-                } 
-                TuitionFee = 0;
+                    Scholarship = 150m;
+                }
+                else
+                {
+                    Scholarship = 0m;
+                }
+                TuitionFee = 0m;
             }
             else
             {
                 Scholarship = 0;
                 if (AverageGrade >= 9.0)
                 {
-                    TuitionFee *= 0.8;
+                    TuitionFee = BaseTuitionFee * 0.8m;
                 }
                 else if (AverageGrade >= 8.0)
                 {
-                    TuitionFee *= 0.9;
+                    TuitionFee = BaseTuitionFee * 0.9m;
+                }
+                else
+                {
+                    TuitionFee = BaseTuitionFee; 
                 }
             }
         }
-        public virtual void PayTuition(double amount)
+        public virtual void PayTuition(decimal amount)
         {
             if(StudyForm == "Платная")
             {
@@ -60,7 +72,7 @@ namespace LAB07
                 {
                     TuitionFee = 0;
                 }
-                Console.WriteLine($"{Name} оплатил {amount} руб. Остаток: {TuitionFee} руб.");
+                Console.WriteLine($"{Name} оплатил {amount}BYN Остаток: {TuitionFee} руб.");
             }
             else
             {
@@ -72,7 +84,7 @@ namespace LAB07
             Course++;
         }
 
-        public virtual double GetRemainingPayment()   //Остаток оплаты
+        public virtual decimal GetRemainingPayment()   //Остаток оплаты
         {
             return TuitionFee;
         }
